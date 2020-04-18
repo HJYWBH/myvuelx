@@ -60,6 +60,7 @@ export default {
           login(this.loginForm)
             .then((res) => {
               if (res.data.meta.status === 200) {
+                this.$store.dispatch('getUsernameactions', res.data.data.username)
                 localStorage.setItem('getToken', res.data.data.token)
                 this.$router.push({ name: 'index' })
               } else {

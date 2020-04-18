@@ -5,34 +5,20 @@
         <div class="logo"></div>
         <el-menu
           :router="true"
-          default-active="1-1"
+          :unique-opened="true"
           class="el-menu-vertical-demo"
           background-color="#545c64"
           text-color="#fff"
           active-text-color="#ffd04b"
         >
-          <el-submenu index="1">
+          <el-submenu :index="first.id+''" v-for="first in leftmeuscaidan" :key="first.id">
             <template slot="title">
               <i class="el-icon-location"></i>
-              <span>用户管理</span>
+              <span>{{first.authName}}</span>
             </template>
-            <el-menu-item index="./userhome">
+            <el-menu-item :index='"/index/"+second.path' v-for="second in first.children" :key="second.id" >
               <i class="el-icon-location"></i>
-              <span>用户列表</span>
-            </el-menu-item>
-          </el-submenu>
-          <el-submenu index="2">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>权限管理</span>
-            </template>
-            <el-menu-item index="./roles">
-              <i class="el-icon-location"></i>
-              <span>角色列表</span>
-            </el-menu-item>
-            <el-menu-item index="./rights">
-              <i class="el-icon-location"></i>
-              <span>权限列表</span>
+              <span>{{second.authName}}</span>
             </el-menu-item>
           </el-submenu>
         </el-menu>
@@ -41,7 +27,11 @@
         <el-header class="el-header">
             <span class="myicon myicon-menu toggle-btn"></span>
             <h1 class="system-title">电商后台管理系统</h1>
-            <a href="javascript:;" class="welcome">退出</a>
+            <div class="welcome">
+              <span>欢迎你：{{$store.getters.getUsernamess}}</span>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <a href="javascript:;">退出</a>
+            </div>
         </el-header>
         <el-main>
             <router-view></router-view>
@@ -51,7 +41,30 @@
   </div>
 </template>
 <script>
-export default {}
+import { leftmeus } from '@/api/rightlist_api.js'
+export default {
+  data () {
+    return {
+      leftmeuscaidan: []
+    }
+  },
+  mounted () {
+    leftmeus()
+      .then((res) => {
+        if (res.data.meta.status === 200) {
+          this.leftmeuscaidan = res.data.data
+        } else {
+          this.$message({
+            type: 'error',
+            message: res.data.meta.msg
+          })
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+}
 </script>
 <style lang="less" scoped>
 .home {
