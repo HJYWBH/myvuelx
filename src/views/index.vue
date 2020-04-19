@@ -30,7 +30,7 @@
             <div class="welcome">
               <span>欢迎你：{{$store.getters.getUsernamess}}</span>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <a href="javascript:;">退出</a>
+              <a href="javascript:;" @click="tuichuShowDia">退出</a>
             </div>
         </el-header>
         <el-main>
@@ -46,6 +46,27 @@ export default {
   data () {
     return {
       leftmeuscaidan: []
+    }
+  },
+  methods: {
+    tuichuShowDia () {
+      this.$confirm('确定要退出吗?', '退出提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        localStorage.removeItem('getToken')
+        this.$router.push({ name: 'login' })
+        this.$message({
+          type: 'success',
+          message: '退出成功!'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消退出'
+        })
+      })
     }
   },
   mounted () {
