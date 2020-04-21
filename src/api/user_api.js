@@ -1,19 +1,19 @@
 import axios from '@/api/commont.js'
 
-export const login = (data) => {
-  return axios({
-    method: 'post',
-    url: 'login',
-    data
-  })
-}
+// export const login = (data) => {
+//   return axios({
+//     method: 'post',
+//     url: 'login',
+//     data
+//   })
+// }
 
-export const usersList = (params) => {
-  return axios({
-    url: 'users',
-    params
-  })
-}
+// export const usersList = (params) => {
+//   return axios({
+//     url: 'users',
+//     params
+//   })
+// }
 
 export const addusers = (data) => {
   return axios({

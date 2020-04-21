@@ -128,7 +128,7 @@
 </template>
 <script>
 import {
-  usersList,
+  // usersList,
   addusers,
   delusers,
   statususers,
@@ -342,7 +342,11 @@ export default {
       this.init()
     },
     init () {
-      usersList(this.chakan)
+      // usersList(this.chakan)
+      this.$axios({
+        url: 'users',
+        params: this.chakan
+      })
         .then(res => {
           if (res.data.meta.status === 200) {
             this.formData = res.data.data.users

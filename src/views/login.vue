@@ -34,7 +34,7 @@
   </div>
 </template>
 <script>
-import { login } from '@/api/user_api.js'
+// import { login } from '@/api/user_api.js'
 export default {
   data () {
     return {
@@ -57,22 +57,41 @@ export default {
     loginla () {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          login(this.loginForm)
-            .then((res) => {
-              if (res.data.meta.status === 200) {
-                this.$store.dispatch('getUsernameactions', res.data.data.username)
-                localStorage.setItem('getToken', res.data.data.token)
-                this.$router.push({ name: 'index' })
-              } else {
-                this.$message({
-                  type: 'error',
-                  message: res.data.meta.msg
-                })
-              }
-            })
+          this.$axios({
+            url: 'login',
+            method: 'post',
+            data: this.loginForm
+          }).then((res) => {
+            if (res.data.meta.status === 200) {
+              this.$store.dispatch('getUsernameactions', res.data.data.username)
+              localStorage.setItem('getToken', res.data.data.token)
+              this.$router.push({ name: 'index' })
+            } else {
+              this.$message({
+                type: 'error',
+                message: res.data.meta.msg
+              })
+            }
+          })
             .catch((err) => {
               console.log(err)
             })
+          // login(this.loginForm)
+          //   .then((res) => {
+          //     if (res.data.meta.status === 200) {
+          //       this.$store.dispatch('getUsernameactions', res.data.data.username)
+          //       localStorage.setItem('getToken', res.data.data.token)
+          //       this.$router.push({ name: 'index' })
+          //     } else {
+          //       this.$message({
+          //         type: 'error',
+          //         message: res.data.meta.msg
+          //       })
+          //     }
+          //   })
+          //   .catch((err) => {
+          //     console.log(err)
+          //   })
         } else {
           this.$message({
             type: 'error',
