@@ -26,7 +26,7 @@
       <el-container>
         <el-header class="el-header">
             <span class="myicon myicon-menu toggle-btn"></span>
-            <h1 class="system-title">电商后台管理系统</h1>
+            <h1 class="system-title">电商后台管理系统git</h1>
             <div class="welcome">
               <span>欢迎你：{{$store.getters.getUsernamess}}</span>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
